@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о пациенте</title>
+</head>
+<body>
+<h2>Информация о пациенте</h2>
+
+<h3>Личные данные</h3>
+<p><strong>ФИО:</strong> {{ patient.last_name }} {{ patient.first_name }} {{ patient.middle_name }}</p>
+<p><strong>Дата рождения:</strong> {{ patient.birth_date }}</p>
+<p><strong>Пол:</strong> {{ patient.get_gender_display }}</p>
+<p><strong>Телефон:</strong> {{ patient.phone }}</p>
+<p><strong>Email:</strong> {{ patient.email|default:"не указан" }}</p>
+<p><strong>Адрес:</strong> {{ patient.address|default:"не указан" }}</p>
+<p><strong>Дата регистрации:</strong> {{ patient.registration_date }}</p>
+
+<h3>Медицинская карта</h3>
+<p><strong>Группа крови:</strong> {{ medical_record.blood_type|default:"не указана" }}</p>
+<p><strong>Аллергии:</strong> {{ medical_record.allergies|default:"не указаны" }}</p>
+<p><strong>Последнее обновление:</strong> {{ medical_record.last_updated }}</p>
+
+<h3>Документы</h3>
+{% if documents %}
+<ul>
+    {% for doc in documents %}
+    <li>
+        <strong>{{ doc.get_document_type_display }}</strong> ({{ doc.upload_date }})<br>
+        <a href="{{ doc.file.url }}" target="_blank">Просмотреть документ</a><br>
+        {{ doc.description|default:"Описание отсутствует" }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Документы не загружены</p>
+{% endif %}
+
+<div>
+    <a href="{% url 'edit_patient' patient.id %}">Изменить</a> |
+    <a href="{% url 'delete_patient' patient.id %}">Удалить</a> |
+    <a href="{% url 'patient_list' %}">Назад к списку</a>
+</div>
+</body>
+</html>

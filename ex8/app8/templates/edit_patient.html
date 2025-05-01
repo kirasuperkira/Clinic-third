@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование пациента</title>
+</head>
+<body>
+    <h1>Редактирование пациента: {{ patient.last_name }} {{ patient.first_name }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <a href="{% url 'patient_detail' patient.id %}">Назад</a>
+</body>
+</html>

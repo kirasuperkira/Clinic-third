@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список пациентов</title>
+</head>
+<body>
+    <h1>Список пациентов</h1>
+    <a href="{% url 'add_patient' %}">Добавить нового пациента</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Дата рождения</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.last_name }} {{ patient.first_name }} {{ patient.middle_name }}</td>
+                <td>{{ patient.birth_date }}</td>
+                <td>{{ patient.phone }}</td>
+                <td>{{ patient.email }}</td>
+                <td>
+                    <a href="{% url 'patient_detail' patient.id %}">Подробнее</a> |
+                    <a href="{% url 'edit_patient' patient.id %}">Изменить</a> |
+                    <a href="{% url 'delete_patient' patient.id %}">Удалить</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
